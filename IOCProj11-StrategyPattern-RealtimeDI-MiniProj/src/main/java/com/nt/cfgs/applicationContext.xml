@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:integration="http://www.springframework.org/schema/integration"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+           http://www.springframework.org/schema/integration
+           http://www.springframework.org/schema/integration/spring-integration-1.0.xsd">
+           
+           <!-- DataSource cfg -->
+           <bean id="dmds" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+           	<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property>
+           	<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"></property>
+           	<property name="username" value="system"></property>
+           	<property name="password" value="manager"></property>
+      	
+           	</bean>
+           	
+           	 	<!-- DAO class cfg -->
+           	<bean id="oraCustDAO" class="com.nt.dao.OracleCustomerDAOImpl">
+           		<constructor-arg name="ds" ref="dmdsOra"/>
+           </bean>
+           
+           	<bean id="msqlCustDAO" class="con.nt.dao.MYSQLCustomerDAOImpl">
+           		<constructor-arg name="ds" ref="dmdsMSQL"></constructor-arg>
+          	</bean>
+          	
+          	
+          	<!-- service class cfg -->
+          	<bean id="custService" class="con.nt.service.CustomerMgmtServiceImpl">
+           		<constructor-arg name="dao" ref="oraCustDAO"></constructor-arg>
+          	</bean>
+</beans>           
